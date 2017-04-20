@@ -23,6 +23,7 @@
               <table>
                 <thead>
                   <th>ID</th>
+                  <th>NAME</th>
                   <th>Room</th>
                   <th>Timestamp</th>
                 </thead>
@@ -84,7 +85,7 @@
         {
           for(var i=0;i<data.users.length;i++)
           {
-            content+="<tr><td>"+data.users[i].id+"</td>"+"<td>"+data.users[i].room+"</td>"+"<td>"+data.users[i].timestamp+"</td></tr>"
+            content+="<tr><td>"+data.users[i].id+"</td>" + "<td>"+data.users[i].name_ps +"</td>"+"<td>"+data.users[i].room+"</td>"+"<td>"+data.users[i].timestamp+"</td></tr>"
           }
           $("#latest").html(content)
         }
