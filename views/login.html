@@ -61,13 +61,13 @@
     {
       event.preventDefault();
       $.ajax({
-        url:"http://localhost:9000/login",
+        url:"/login",
         method:"POST",
         data:{username:$("#username").val().trim(),password:$("#password").val()}
       }).done(function(data)
       {
           console.log(data);
-          window.location.href="http://localhost:9000/";
+          window.location.href="/";
       })
     })
   </script>

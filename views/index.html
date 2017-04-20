@@ -73,7 +73,7 @@
     $("#search_result").hide();
     function getLatest(){
       $.ajax({
-        url:"http://localhost:9000/top10",
+        url:"/top10",
         method:"POST",
         json:{}
       }).done(function(data)
@@ -102,7 +102,7 @@
     {
         event.preventDefault();
         $.ajax({
-          url:"http://localhost:9000/query/"+$("#search_id").val().trim(),
+          url:"/query/"+$("#search_id").val().trim(),
           method:"POST",
         }).done(function(data)
         {
