@@ -25,6 +25,7 @@ module.exports = function(app)
     {
       user.create({
         id:req.body.id|| 0,
+        name_ps: req.body.name_ps,
         timestamp:req.body.timestamp || 0,
         room : req.body.room || ""
       });
