@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HOME</title>
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  </head>
+  <body class = "red lighten-1">
+    <nav>
+    <div class="nav-wrapper red darken-2">
+
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/logout.html">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+    <div class="container s6 m6 l6">
+      <div class="row s6 m6 l6" id ="login">
+        <div class="card s6 m6 l6 white z-depth-4">
+          <div class="card-content">
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input  id="username" type="text" class="validate">
+                    <label for="username">Username</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field center col s12">
+                    <a href="#" class ="btn btn-medium" id = "submit">Login</a>
+                  </div>
+                </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+    </div>
+    </div>
+  </body>
+
+  <script type="text/javascript" src="js/materialize.min.js"> </script>
+  <script type="text/javascript">
+    $(".card").css({"margin-top":"33%"})
+    $("#login").css({"padding-left":"33%"})
+    $("#login").css({"padding-right":"33%"})
+    $("#login").css({"padding-top":"5%"})
+    $(".container").css({"height":"150%"})
+    $("#submit").click(function(event)
+    {
+      event.preventDefault();
+      $.ajax({
+        url:"/login",
+        method:"POST",
+        data:{username:$("#username").val().trim(),password:$("#password").val()}
+      }).done(function(data)
+      {
+          console.log(data);
+          window.location.href="/";
+      })
+    })
+  </script>
+</html>

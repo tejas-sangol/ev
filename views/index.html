@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HOME</title>
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  </head>
+  <body class = "red lighten-1">
+    <nav>
+    <div class="nav-wrapper red darken-2">
+
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/logout.html">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+    <div class="container s6 m6 l6">
+      <div class="row s6 m6 l6" id = "table">
+        <div class="card s6 m6 l6 white z-depth-4" id="cardWithMargin">
+          <div class="card-content">
+            <div class="row">
+              <table>
+                <thead>
+                  <th>ID</th>
+                  <th>NAME</th>
+                  <th>Room</th>
+                  <th>Timestamp</th>
+                </thead>
+                <tbody id = "latest">
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <div class="row" id = "search">
+      <div class="card s6 m6 l6 white z-depth-4" >
+        <div class="card-content">
+          <div class="row">
+            <form class="col s12" id='search_form'>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input  id="search_id" type="text" class="validate">
+                  <label for="search_id">Enter ID</label>
+                </div>
+
+                <div class="input-field center col s12">
+                  <a href="#" class ="btn btn-medium" id = "submit">Search</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="card-action" id = "search_result">
+
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </body>
+
+  <script type="text/javascript" src="js/materialize.min.js"> </script>
+  <script type="text/javascript">
+    $("#table").css({"padding-left":"15%"})
+    $("#table").css({"padding-right":"15%"})
+    $("#table").css({"padding-top":"5%"})
+    $("#search").css({"padding-left":"15%"})
+    $("#search").css({"padding-right":"15%"})
+    $(".container").css({"height":"150%"})
+    $("#search_result").hide();
+    function getLatest(){
+      $.ajax({
+        url:"/top10",
+        method:"POST",
+        json:{}
+      }).done(function(data)
+      {
+        var content ="";
+        console.log(data)
+        if(data.users.length)
+        {
+          for(var i=0;i<data.users.length;i++)
+          {
+            content+="<tr><td>"+data.users[i].id+"</td>" + "<td>"+data.users[i].name_ps +"</td>"+"<td>"+data.users[i].room+"</td>"+"<td>"+data.users[i].timestamp+"</td></tr>"
+          }
+          $("#latest").html(content)
+        }
+
+      }).fail(function(err)
+      {
+        console.log(err);
+      })
+    }
+
+    getLatest();
+    setInterval(getLatest,60000);
+    $("#search_form").submit((event)=>{event.preventDefault()})
+    $("#submit").click(function(event)
+    {
+        event.preventDefault();
+        $.ajax({
+          url:"/query/"+$("#search_id").val().trim(),
+          method:"POST",
+        }).done(function(data)
+        {
+          if(data.message) $("#search_result").html("<h4 align='center'>User not found!</h4>")
+          else $("#search_result").html("<p><b>ID: </b>"+data.user.id+" </p> " +"<p><b>Room: </b>"+data.user.room+" </p> " +"<p><b>Timestamp: </b>"+data.user.timestamp+" </p> " );
+          $("#search_result").show();
+        }).fail(function(err)
+        {
+            console.log(err);
+        })
+    })
+
+  </script>
+</html>
